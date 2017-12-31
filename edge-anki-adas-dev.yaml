@@ -1,0 +1,29 @@
+kind: BuildConfig
+apiVersion: v1
+metadata:
+  name: edge-anki-adas-dev
+  labels:
+    name: edge-anki-adas-dev
+spec:
+  triggers:
+  - type: GitHub
+    github:
+      secret: CHANGEME
+  - type: Generic
+    generic:
+      secret: CHANGEME
+  - type: ConfigChange
+  runPolicy: Serial
+  strategy:
+    type: JenkinsPipeline
+    jenkinsPipelineStrategy:
+      jenkinsfile: |-
+        node('maven') {
+          stage 'build'
+          openshiftBuild(buildConfig: 'edge-anki-adas-build', showBuildLogs: 'true', namespace: 'edge-dev')
+          stage 'push'
+          openshiftBuild(buildConfig: 'edge-anki-adas-push', showBuildLogs: 'true', namespace: 'edge-dev')
+          stage 'deploy'
+          openshiftBuild(buildConfig: 'edge-anki-adas-deploy', showBuildLogs: 'true', namespace: 'edge-dev')
+        }
+
