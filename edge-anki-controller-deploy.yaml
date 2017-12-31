@@ -1,0 +1,29 @@
+kind: BuildConfig
+apiVersion: v1
+metadata:
+  name: edge-anki-controller-deploy
+  labels:
+    name: edge-anki-controller-deploy
+spec:
+  triggers:
+  - type: GitHub
+    github:
+      secret: CHANGEME
+  - type: Generic
+    generic:
+      secret: CHANGEME
+  - type: ConfigChange
+  runPolicy: Serial
+  strategy:
+    type: Custom
+    customStrategy:
+      exposeDockerSocket: true
+      forcePull: true
+      from:
+        kind: "DockerImage"
+        name: "okoeth/edge-deployer"
+      env:
+        - name: ENV1
+          value: Value 1
+        - name: ENV2
+          value: Value 2
