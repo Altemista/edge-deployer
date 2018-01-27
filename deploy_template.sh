@@ -18,8 +18,12 @@ TEMPLATE=$5
 HOSTNAME=$6
 
 export TOKEN=`curl -s  -H "Content-type: application/json"  -X POST https://$SERVER:443/keystone/v2.0/tokens -d "{ \"auth\": { \"tenantName\": \"$TENANT\", \"passwordCredentials\": { \"username\": \"$USER\", \"password\": \"$PASSWORD\"}}}" | jq '.access.token.id' | tr -d '"'`
-echo $TOKEN
+echo "TOKEN=$TOKEN"
 
-sed -e "s/__HOSTNAME__/$HOSTNAME/g" < $TEMPLATE.tpl > $TEMPLATE.json
-curl -X POST -H "X-Auth-Token: $TOKEN" https://$SERVER/gohan/v1.0/service_templates -d @$TEMPLATE.json
+export COMPOSE=`sed -e ':a' -e 'N' -e '$!ba' -e 's/\n/\\\\\\\\n/g' -e 's/"/\\\\\\\\"/g' -e "s/__HOSTNAME__/$HOSTNAME/g" < $TEMPLATE.compose.yaml`
+echo "COMPOSE=$COMPOSE"
+
+sed -e "s+__COMPOSE__+$COMPOSE+g" < $TEMPLATE.tpl > $TEMPLATE.json
+cat $TEMPLATE.json
+#curl -X POST -H "X-Auth-Token: $TOKEN" https://$SERVER/gohan/v1.0/service_templates -d @$TEMPLATE.json
 rm $TEMPLATE.json

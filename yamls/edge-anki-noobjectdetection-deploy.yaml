@@ -1,0 +1,39 @@
+kind: BuildConfig
+apiVersion: v1
+metadata:
+  name: edge-anki-noobjectdetection-deploy
+  labels:
+    name: edge-anki-noobjectdetection-deploy
+spec:
+  triggers:
+  - type: GitHub
+    github:
+      secret: CHANGEME
+  - type: Generic
+    generic:
+      secret: CHANGEME
+  - type: ConfigChange
+  runPolicy: Serial
+  strategy:
+    type: Custom
+    customStrategy:
+      exposeDockerSocket: true
+      forcePull: true
+      from:
+        kind: "DockerImage"
+        name: "okoeth/edge-deployer"
+      env:
+        - name: SERVER
+          value: CHANGEME
+        - name: TENANT
+          value: CHANGEME
+        - name: USER
+          value: CHANGEME
+        - name: PASSWORD
+          value: CHANGEME
+        - name: SERVICE
+          value: CHANGEME
+        - name: NETWORK_ID
+          value: CHANGEME
+        - name: SITE_GROUP_ID
+          value: CHANGEME
