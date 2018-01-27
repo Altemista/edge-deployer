@@ -12,26 +12,29 @@
 # used for extracting other values from the BUILD json from a shell script.
 #
 
-if [ x = x$1 -o x = x$2 -o x = x$3 -o x = x$4 -o x = x$5 ]; then
-    echo "Usage: ./deploy_template.sh "
-    echo "           <server>"
-    echo "           <tenant>"
-    echo "           <user>"
-    echo "           <password>"
-    echo "           <service>"
-    exit
+if [ x = x$SERVER -o x = x$TENANT -o x = x$USER -o x = x$PASSWORD -o x = x$SERVICE -o x = x$NETWORK_ID -o x = x$SITE_GROUP_ID ]; then
+    echo "Usage: ./deploy.sh with the following env variables beeing not empty"
+    echo "           SERVER"
+    echo "           TENANT"
+    echo "           USER"
+    echo "           PASSWORD"
+    echo "           SERVICE"
+    echo "           NETWORK_ID"
+    echo "           SITE_GROUP_ID"
+    exit 1
 fi
 
-SERVER=$1
-TENANT=$2
-USER=$3
-PASSWORD=$4
-SERVICE=$5
-NETWORK_ID=$6
-SITE_GROUP_ID=$6
+echo "SERVER=$SERVER"
+echo "TENANT=$TENANT"
+echo "USER=$USER"
+echo "PASSWORD=$PASSWORD"
+echo "SERVICE=$SERVICE"
+echo "NETWORK_ID=$NETWORK_ID"
+echo "SITE_GROUP_ID=$SITE_GROUP_ID"
 
 export TOKEN=`curl -s  -H "Content-type: application/json"  -X POST https://$SERVER:443/keystone/v2.0/tokens -d "{ \"auth\": { \"tenantName\": \"$TENANT\", \"passwordCredentials\": { \"username\": \"$USER\", \"password\": \"$PASSWORD\"}}}" | jq '.access.token.id' | tr -d '"'`
-echo $TOKEN
+echo "TOKEN=$TOKEN"
 
 sed -e "s/__NETWORK_ID__/$NETWORK_ID/g" -e "s/__SITE_GROUP_ID__/$SITE_GROUP_ID/g" < $SERVICE.tpl > $SERVICE.json
-curl -X POST -H "X-Auth-Token: $TOKEN" https://$SERVER/gohan/v1.0/services -d @$SERVICE.json
+#curl -X POST -H "X-Auth-Token: $TOKEN" https://$SERVER/gohan/v1.0/services -d @$SERVICE.json
+rm $SERVICE.json
