@@ -24,5 +24,4 @@ LABEL io.k8s.display-name="Edge Deployer Image" \
 ENV HOME=/root
 COPY defs /tmp/defs
 COPY deploy.sh /tmp/deploy.sh
-RUN find /tmp
 CMD ["/tmp/deploy.sh"]
