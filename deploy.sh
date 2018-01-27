@@ -32,6 +32,8 @@ echo "SERVICE=$SERVICE"
 echo "NETWORK_ID=$NETWORK_ID"
 echo "SITE_GROUP_ID=$SITE_GROUP_ID"
 
+find .
+
 export TOKEN=`curl -s  -H "Content-type: application/json"  -X POST https://$SERVER:443/keystone/v2.0/tokens -d "{ \"auth\": { \"tenantName\": \"$TENANT\", \"passwordCredentials\": { \"username\": \"$USER\", \"password\": \"$PASSWORD\"}}}" | jq '.access.token.id' | tr -d '"'`
 echo "TOKEN=$TOKEN"
 
