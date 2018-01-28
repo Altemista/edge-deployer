@@ -25,5 +25,5 @@ echo "COMPOSE=$COMPOSE"
 
 sed -e "s+__COMPOSE__+$COMPOSE+g" < $TEMPLATE.tpl > $TEMPLATE.json
 cat $TEMPLATE.json
-#curl -X POST -H "X-Auth-Token: $TOKEN" https://$SERVER/gohan/v1.0/service_templates -d @$TEMPLATE.json
+curl -X POST -H "X-Auth-Token: $TOKEN" https://$SERVER/gohan/v1.0/service_templates -d @$TEMPLATE.json
 rm $TEMPLATE.json

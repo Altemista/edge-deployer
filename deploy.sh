@@ -39,5 +39,5 @@ echo "TOKEN=$TOKEN"
 
 sed -e "s/__NETWORK_ID__/$NETWORK_ID/g" -e "s/__SITE_GROUP_ID__/$SITE_GROUP_ID/g" < $SERVICE.tpl > $SERVICE.json
 cat $SERVICE.json
-#curl -X POST -H "X-Auth-Token: $TOKEN" https://$SERVER/gohan/v1.0/services -d @$SERVICE.json
+curl -X POST -H "X-Auth-Token: $TOKEN" https://$SERVER/gohan/v1.0/services -d @$SERVICE.json
 rm $SERVICE.json
