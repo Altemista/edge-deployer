@@ -1,0 +1,8 @@
+{
+ "service": {
+    "name": "Anki",
+    "network_id": "952157d6-ce62-4837-b43d-c0594e39f596",
+    "service_template_id": "AnkiSoftwareStackEnso",
+    "site_group_id": "58c65c88-4345-4a1b-946d-edfb611aac64"
+  }
+}
