@@ -22,7 +22,7 @@ RUN INSTALL_PKGS="gettext automake make docker jq" && \
 LABEL io.k8s.display-name="Edge Deployer Image" \
       io.k8s.description="This is a deployer image which updates CloudWan edge devices."
 ENV HOME=/root
-COPY defs /tmp/defs
-COPY deploy.sh /tmp/deploy.sh
+COPY defs /tmp/defs/
+COPY *.sh /tmp/
 WORKDIR /tmp
-CMD ["./deploy.sh"]
+CMD ["./run.sh"]

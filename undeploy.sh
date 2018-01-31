@@ -39,7 +39,6 @@ ls -l defs
 export TOKEN=`curl -s  -H "Content-type: application/json"  -X POST https://$SERVER:443/keystone/v2.0/tokens -d "{ \"auth\": { \"tenantName\": \"$TENANT\", \"passwordCredentials\": { \"username\": \"$USER\", \"password\": \"$PASSWORD\"}}}" | jq '.access.token.id' | tr -d '"'`
 echo "TOKEN=$TOKEN"
 
-sed -e "s/__NETWORK_ID__/$NETWORK_ID/g" -e "s/__SITE_GROUP_ID__/$SITE_GROUP_ID/g" -e "s/__SERVICE_NAME__/$SERVICE_NAME/g" -e "s/__SERVICE_TEMPLATE_ID__/$SERVICE_TEMPLATE_ID/g"  < defs/generic_service.tpl > defs/generic_service.json
-cat defs/generic_service.json
-curl -X POST -H "X-Auth-Token: $TOKEN" https://$SERVER/gohan/v1.0/services -d @defs/generic_service.json
-rm defs/generic_service.json
+export SERVICE_ID=`./describe_service.sh $SERVER $TENANT $USER $PASSWORD $SITE_GROUP_ID $SERVICE_TEMPLATE_ID | jq '.services[0].id' | sed 's/\"//g'`
+
+./delete_service.sh $SERVER $TENANT $USER $PASSWORD $SERVICE_ID
