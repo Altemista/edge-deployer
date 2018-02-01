@@ -1,9 +1,9 @@
 kind: BuildConfig
 apiVersion: v1
 metadata:
-  name: edge-anki-noobjectdetection-deploy
+  name: __NAME__
   labels:
-    name: edge-anki-noobjectdetection-deploy
+    name: __NAME__
 spec:
   triggers:
   - type: GitHub
@@ -23,6 +23,8 @@ spec:
         kind: "DockerImage"
         name: "okoeth/edge-deployer"
       env:
+        - name: COMMAND
+          value: CHANGEME
         - name: SERVER
           value: CHANGEME
         - name: TENANT
@@ -31,7 +33,9 @@ spec:
           value: CHANGEME
         - name: PASSWORD
           value: CHANGEME
-        - name: SERVICE
+        - name: SERVICE_NAME
+          value: CHANGEME
+        - name: SERVICE_TEMPLATE_ID
           value: CHANGEME
         - name: NETWORK_ID
           value: CHANGEME
