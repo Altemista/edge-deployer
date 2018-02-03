@@ -1,0 +1,24 @@
+{
+  "service_template": {
+    "id": "AnkiObjectDetection",
+    "is_public": true,
+    "is_vpn_service": true,
+    "name": "AnkiObjectDetection",
+    "requires_license_key": false,
+    "service_category_id": "VirtualAppliance",
+    "service_level": "ADVANCED",
+    "service_tag": "dummy",
+    "service_type": "virtual_appliance",
+    "version": "v1.0.0",
+    "virtualization_data": "services:\n  edge-anki-objectdetection:\n    devices: ['/dev/video0:/dev/video0']\n    environment: ['HTTP_WEBSOCKET=localhost:8003', 'HTTP_IMAGE_WEBSOCKET=localhost:8001']\n    image: sappelt/edge-anki-objectdetection\n    network_mode: host\n    restart: unless-stopped\nversion: '2'\n",
+    "virtualization_type": "docker-compose",
+    "vpn_template": {
+      "interfaces": [
+        {
+          "is_default_gateway": true,
+          "name": "LAN"
+        }
+      ]
+    }
+  }
+}

@@ -1,8 +1,8 @@
 {
 	"service_template": {
-	  "id": "anki_objectdetection_template",
+	  "id": "__TEMPLATE_ID__",
 	  "is_public": true,
-	  "name": "AnkiSoftwareStackFullDeploy",
+	  "name": "__TEMPLATE_ID__",
 	  "requires_license_key": false,
 	  "service_category_id": "VirtualAppliance",
 	  "service_type": "virtual_appliance",

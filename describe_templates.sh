@@ -15,4 +15,4 @@ PASSWORD=$4
 
 export TOKEN=`curl -s  -H "Content-type: application/json"  -X POST https://$SERVER:443/keystone/v2.0/tokens -d "{ \"auth\": { \"tenantName\": \"$TENANT\", \"passwordCredentials\": { \"username\": \"$USER\", \"password\": \"$PASSWORD\"}}}" | jq '.access.token.id' | tr -d '"'`
 
-curl -X GET -H "X-Auth-Token: $TOKEN" https://$SERVER/gohan/v1.0/service_templates
+curl -s -X GET -H "X-Auth-Token: $TOKEN" https://$SERVER/gohan/v1.0/service_templates

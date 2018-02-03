@@ -1,0 +1,24 @@
+{
+  "service_template": {
+    "id": "AnkiSoftwareStackEnsoBase",
+    "is_public": true,
+	  "is_vpn_service": true,
+    "name": "AnkiSoftwareStackEnsoBase",
+    "requires_license_key": false,
+    "service_category_id": "VirtualAppliance",
+    "service_level": "ADVANCED",
+    "service_tag": "dummy",
+    "service_type": "virtual_appliance",
+    "version": "v1.0.0",
+    "virtualization_data": "services:\n  edge-anki-adas:\n    environment: [CAR_HTTP_SERVER=localhost]\n    image: sappelt/edge-anki-adas\n    network_mode: host\n    restart: unless-stopped\n  edge-anki-controller-1:\n    environment: ['HTTP_ADAS_WEBSOCKET=localhost:8003', 'HTTP_TWIN_WEBSOCKET=localhost:8001',\n      CAR_NO=1, CAR_INIT_BLUETOOTH_ID=ec7d32207f95, CAR_LANE_NO=1, TRACK_CONFIG=config/eight-enso.json]\n    image: sappelt/edge-anki-controller\n    network_mode: host\n    restart: unless-stopped\n    volumes: ['car1config:/usr/src/app/mounted-config']\n  edge-anki-controller-2:\n    environment: ['HTTP_ADAS_WEBSOCKET=localhost:8003', 'HTTP_TWIN_WEBSOCKET=localhost:8001',\n      CAR_NO=2, CAR_INIT_BLUETOOTH_ID=edef582991e2, CAR_LANE_NO=4, TRACK_CONFIG=config/eight-enso.json]\n    image: sappelt/edge-anki-controller\n    network_mode: host\n    restart: unless-stopped\n    volumes: ['car2config:/usr/src/app/mounted-config']\n  edge-anki-twin:\n    environment: [CAR_HTTP_SERVER=localhost, CAR_CONFIG_FILE=cars-germany.json]\n    image: sappelt/edge-anki-twin\n    network_mode: host\n    restart: unless-stopped\n  portainer:\n    container_name: portainer-app\n    image: portainer/portainer\n    network_mode: host\n    volumes: ['unix_sock:/var/run']\nversion: '2'\nvolumes:\n  car1config: null\n  car2config: null\n  unix_sock:\n    driver_opts: {device: /var/run, o: bind, type: none}\n",
+    "virtualization_type": "docker-compose",
+    "vpn_template": {
+      "interfaces": [
+        {
+          "is_default_gateway": true,
+          "name": "LAN"
+        }
+      ]
+    }
+  }
+}

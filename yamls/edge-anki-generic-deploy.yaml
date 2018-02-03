@@ -24,20 +24,20 @@ spec:
         name: "okoeth/edge-deployer"
       env:
         - name: COMMAND
-          value: CHANGEME
+          value: __COMMAND__
         - name: SERVER
-          value: CHANGEME
+          value: __SERVER__
         - name: TENANT
-          value: CHANGEME
+          value: __TENANT__
         - name: USER
-          value: CHANGEME
+          value: __USER__
         - name: PASSWORD
-          value: CHANGEME
+          value: __PASSWORD__
         - name: SERVICE_NAME
-          value: CHANGEME
+          value: __SERVICE_NAME__
         - name: SERVICE_TEMPLATE_ID
-          value: CHANGEME
+          value: __SERVICE_TEMPLATE_ID__
         - name: NETWORK_ID
-          value: CHANGEME
+          value: __NETWORK_ID__
         - name: SITE_GROUP_ID
-          value: CHANGEME
+          value: __SITE_GROUP_ID__
