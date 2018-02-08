@@ -1,9 +1,9 @@
 kind: BuildConfig
 apiVersion: v1
 metadata:
-  name: edge-anki-adas-dev
+  name: edge-anki-objectdetection-dev
   labels:
-    name: edge-anki-adas-dev
+    name: edge-anki-objectdetection-dev
 spec:
   triggers:
   - type: GitHub
@@ -21,7 +21,7 @@ spec:
         node('maven') {
           stage('build') {
             try {
-              openshiftBuild(buildConfig: 'edge-anki-adas-build', showBuildLogs: 'true', namespace: 'edge-dev')
+              openshiftBuild(buildConfig: 'edge-anki-objectdetection-build', showBuildLogs: 'true', namespace: 'edge-dev')
             } catch(e) {
               hipchatSend(color: 'RED', message: "Jenkins pipleine ${env.JOB_NAME} [${env.BUILD_NUMBER}] failed in stage edge-anki-objectdetection-build, please check: <a href='${env.BUILD_URL}'>here</a>")
               throw (e)
@@ -29,7 +29,7 @@ spec:
           }
           stage('push') {
             try {
-              openshiftBuild(buildConfig: 'edge-anki-adas-push', showBuildLogs: 'true', namespace: 'edge-dev')
+              openshiftBuild(buildConfig: 'edge-anki-objectdetection-push', showBuildLogs: 'true', namespace: 'edge-dev')
             } catch(e) {
               hipchatSend(color: 'RED', message: "Jenkins pipleine ${env.JOB_NAME} [${env.BUILD_NUMBER}] failed in stage edge-anki-objectdetection-push, please check: <a href='${env.BUILD_URL}'>here</a>")
               throw (e)

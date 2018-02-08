@@ -19,7 +19,24 @@ spec:
     jenkinsPipelineStrategy:
       jenkinsfile: |-
         node('maven') {
-          stage 'deploy'
-          openshiftBuild(buildConfig: 'edge-anki-controller-deploy', showBuildLogs: 'true', namespace: 'edge-dev')
+          stage('build') {
+            try {
+              openshiftBuild(buildConfig: 'edge-anki-controller-build', showBuildLogs: 'true', namespace: 'edge-dev')
+            } catch(e) {
+              hipchatSend(color: 'RED', message: "Jenkins pipleine ${env.JOB_NAME} [${env.BUILD_NUMBER}] failed in stage edge-anki-objectdetection-build, please check: <a href='${env.BUILD_URL}'>here</a>")
+              throw (e)
+            }
+          }
+          stage('push') {
+            try {
+              openshiftBuild(buildConfig: 'edge-anki-controller-push', showBuildLogs: 'true', namespace: 'edge-dev')
+            } catch(e) {
+              hipchatSend(color: 'RED', message: "Jenkins pipleine ${env.JOB_NAME} [${env.BUILD_NUMBER}] failed in stage edge-anki-objectdetection-push, please check: <a href='${env.BUILD_URL}'>here</a>")
+              throw (e)
+            }
+          }
+          stage('notify') {
+            hipchatSend(color: 'GREEN', message: "Jenkins pipleine ${env.JOB_NAME} [${env.BUILD_NUMBER}] completed successfully")
+          }
         }
 
