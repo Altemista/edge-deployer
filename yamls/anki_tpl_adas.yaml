@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  edge-anki-adas:
+    environment: [CAR_HTTP_SERVER=localhost]
+    image: altemista/edge-anki-adas
+    network_mode: host
+    restart: unless-stopped
+
+  volumes:
+    unix_sock:
+      driver_opts: {device: /var/run, o: bind, type: none}

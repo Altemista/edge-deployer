@@ -1,0 +1,24 @@
+version: '2'
+
+services:
+  edge-anki-controller-1:
+    environment: ['HTTP_ADAS_WEBSOCKET=localhost:8003', 'HTTP_TWIN_WEBSOCKET=localhost:8001',
+      CAR_NO=1, CAR_INIT_BLUETOOTH_ID=ec7d32207f95, CAR_LANE_NO=1, TRACK_CONFIG=config/eight-i3.json]
+    image: altemista/edge-anki-controller
+    network_mode: host
+    restart: unless-stopped
+    volumes: ['car1config:/usr/src/app/mounted-config']
+
+  edge-anki-controller-2:
+    environment: ['HTTP_ADAS_WEBSOCKET=localhost:8003', 'HTTP_TWIN_WEBSOCKET=localhost:8001',
+      CAR_NO=2, CAR_INIT_BLUETOOTH_ID=edef582991e2, CAR_LANE_NO=4, TRACK_CONFIG=config/eight-i3.json]
+    image: altemista/edge-anki-controller
+    network_mode: host
+    restart: unless-stopped
+    volumes: ['car2config:/usr/src/app/mounted-config']
+
+  volumes:
+    car1config: null
+    car2config: null
+    unix_sock:
+      driver_opts: {device: /var/run, o: bind, type: none}

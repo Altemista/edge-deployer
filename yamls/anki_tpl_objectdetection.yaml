@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+  edge-anki-objectdetection:
+    devices: ['/dev/video0:/dev/video0']
+    environment: ['HTTP_WEBSOCKET=localhost:8003', 'HTTP_IMAGE_WEBSOCKET=localhost:8001']
+    image: altemista/edge-anki-objectdetection
+    network_mode: host
+    restart: unless-stopped

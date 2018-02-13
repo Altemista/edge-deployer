@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  edge-anki-twin:
+    environment: [CAR_HTTP_SERVER=localhost, CAR_CONFIG_FILE=cars.json]
+    image: altemista/edge-anki-twin
+    network_mode: host
+    restart: unless-stopped
+
+  volumes:
+    unix_sock:
+      driver_opts: {device: /var/run, o: bind, type: none}
